@@ -3,11 +3,6 @@ import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 
 const BlogTemplate = ({ data, pageContext }) => {
-  const { currentPage, isFirstPage, isLast } = pageContext
-  const nextPage = `/blog/${String(currentPage + 1)}`
-  const prevPage =
-    currentPage - 1 === 1 ? "/blog" : `/blog/${String(currentPage - 1)}`
-  console.log(isLast)
   return (
     <Layout>
       <div>
@@ -22,19 +17,14 @@ const BlogTemplate = ({ data, pageContext }) => {
             <p>{node.excerpt}</p>
           </div>
         ))}
-        <div>
-          {!isFirstPage && <Link to={prevPage}>prevPage</Link>}
-          {!isLast && <Link to={nextPage}>Next page</Link>}
-        </div>
       </div>
     </Layout>
   )
 }
 
 export const query = graphql`
-  query($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(skip: $skip, limit: $limit) {
-      totalCount
+  {
+    allMarkdownRemark {
       edges {
         node {
           fields {
